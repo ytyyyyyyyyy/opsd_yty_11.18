@@ -1,0 +1,12 @@
+{
+  "last_completed_optimizer_step": 68,
+  "last_saved_checkpoint_step": 65,
+  "last_complete_validation_step": 65,
+  "best_validation_step": 50,
+  "best_validation_accuracy": 0.45,
+  "unsaved_model_updates": [
+    66,
+    67,
+    68
+  ]
+}

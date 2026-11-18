@@ -1,0 +1,66 @@
+{
+  "active_training_arms": [
+    "max_gap_k5"
+  ],
+  "replacement_start": "maximum-gap token C",
+  "k": 5,
+  "historical_reference_arms": [
+    "base",
+    "opsd"
+  ],
+  "logging_every_optimizer_step": true,
+  "per_step_log_pattern": "runs/gap_intervention_20261104/training/max_gap_k5/step_logs/step-XXXXXX.json",
+  "training": {
+    "seed": 42,
+    "data_seed": 42,
+    "micro_batch": 1,
+    "gradient_accumulation": 32,
+    "learning_rate": 5e-06,
+    "planned_epochs": 30,
+    "max_completion_length": 1024,
+    "max_prompt_length": 20000,
+    "temperature": 1.1,
+    "top_p": 0.95,
+    "top_k": 20,
+    "max_grad_norm": 0.1,
+    "lora_rank": 64,
+    "lora_alpha": 128,
+    "student_thinking": false,
+    "teacher_thinking": true,
+    "pytorch_allocator_limit_gib": 20,
+    "loss": "FP32 all-position full-vocabulary forward KL; vocabulary-term upper clip .05",
+    "beta": 0,
+    "token_clip": 0.05,
+    "train_on": "Final revised trajectory only; no additional original-trajectory loss",
+    "checkpoint_retention": "Keep all checkpoints; no automatic deletion"
+  },
+  "gap": {
+    "divergence": "Unclipped full-vocabulary forward KL at temperature 1.1",
+    "chunk_tokens": 16,
+    "horizon": 64,
+    "candidate_max_k": 10,
+    "index": "Zero-based RESPONSE TOKEN index: peak C=2; max starts C=2; pre starts B=1",
+    "candidates": "Response index >=1; all 10 target tokens and preceding token must be non-special",
+    "max_pre_common_window": "peak_response_index + K, H<=64, paired common valid length",
+    "random_window": "random_start + K, paired with original branch",
+    "short_trajectory": "Keep original trace, record fallback; do not drop the training example",
+    "teacher_eos": "Honor EOS, record actual K; no fabricated padding or continuation after EOS",
+    "selection_rng": "Private deterministic RNG, does not consume student rollout RNG"
+  },
+  "validation": {
+    "dataset": "aime25",
+    "questions": 30,
+    "n": 12,
+    "metric": "Avg@12 = correct generations / 360",
+    "every_optimizer_updates": 5,
+    "temperature": 1.0,
+    "max_new_tokens": 38912,
+    "thinking": true,
+    "independent_student": true,
+    "automatic_early_stopping": false,
+    "gpu_memory_gib": 26.0,
+    "max_num_seqs": 12
+  },
+  "planned_protocol": "runs/gap_intervention_20261104/protocol.json",
+  "history_reuse": "runs/gap_intervention_20261104/history_reuse.json"
+}

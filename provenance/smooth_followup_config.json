@@ -1,0 +1,53 @@
+{
+  "project_root": ".",
+  "parent_run": "runs/opsd_smoothness_pilot_20261113",
+  "model": "models/Qwen3-1.7B",
+  "gpu": 0,
+  "gpu_memory_gib": 20.0,
+  "scoring_allocator_gib": 16.0,
+  "resource_policy": "At most one GPU occupied by this user, all jobs serial; other users are never stopped",
+  "wait_for": "Parent pilot C evaluation completed and its GPU process released",
+  "no_training": true,
+  "evaluation": {
+    "labels": [
+      "start_step35",
+      "baseline",
+      "mean_kl",
+      "smooth"
+    ],
+    "n": 2,
+    "max_new_tokens": 38912,
+    "seed": 42,
+    "thinking": true,
+    "temperature": 1.0,
+    "max_active_questions": 1
+  },
+  "diagnostics": {
+    "arms": [
+      "baseline",
+      "mean_kl",
+      "smooth"
+    ],
+    "questions": 64,
+    "n_per_round": 2,
+    "round_seeds": [
+      20261113,
+      20271113,
+      20281113,
+      20291113
+    ],
+    "max_rounds": 4,
+    "max_new_tokens": 16384,
+    "student_thinking": false,
+    "teacher_thinking": true,
+    "temperature": 1.1,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_complete_per_class_per_arm": 30,
+    "min_distinct_questions_per_class_per_arm": 10,
+    "stop_policy": "Finish the same full round for all three arms; stop once every arm meets both quotas, or after four rounds; retain and report all outcomes",
+    "teacher": "Frozen same base, adapter disabled, full reference solution visible",
+    "grade": "Only EOS-completed strictly graded correct/incorrect enter comparison; other outcomes separately counted"
+  },
+  "interpretation": "Long AIME evaluation has a fixed denominator. Adaptive diagnostic sampling is separate and is never used as a benchmark accuracy estimate."
+}

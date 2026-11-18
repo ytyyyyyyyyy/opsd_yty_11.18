@@ -1,0 +1,5 @@
+qid,pair_id,error_kind,oracle_token,gapmax_token,ratio_max_token,oracle_student_retry_correct,oracle_student_retry_n,oracle_gold_token_correct,oracle_gold_token_n,oracle_teacher5_correct,oracle_teacher5_n,nearby_teacher5_correct,nearby_teacher5_n,oracle_observed_token_correct,oracle_observed_token_n,gapmax_student_retry_correct,gapmax_student_retry_n,gapmax_teacher5_correct,gapmax_teacher5_n,ratiomax_student_retry_correct,ratiomax_student_retry_n,ratiomax_teacher5_correct,ratiomax_teacher5_n,token_counterfactual_effect,gap_routing_teacher_increment,ratio_routing_teacher_increment
+6,q006_w02_c00,arithmetic,604,810,805,0,8,8,8,8,8,0,8,1,8,0,8,0,8,0,8,8,8,0.875,0.0,1.0
+15,q015_w07_c00,cycle_index,665,700,696,1,8,8,8,0,8,3,8,0,8,0,8,6,8,0,8,8,8,1.0,0.75,1.0
+21,q021_w04_c00,liar_truth_constraint,709,870,21,6,8,6,8,5,8,3,8,3,8,0,8,1,8,4,8,4,8,0.375,0.125,0.0
+29,q029_w03_c00,division,610,652,610,8,8,7,8,7,8,7,8,7,8,7,8,5,8,7,8,5,8,0.0,-0.25,-0.25

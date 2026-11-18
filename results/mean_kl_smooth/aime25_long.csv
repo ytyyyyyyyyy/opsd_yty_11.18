@@ -1,0 +1,5 @@
+checkpoint,correct,total,accuracy,completed_incorrect,truncated,ungraded
+start_step35,21,60,0.35,38,1,0
+baseline,25,60,0.4166666666666667,34,0,1
+mean_kl,23,60,0.38333333333333336,35,2,0
+smooth,26,60,0.43333333333333335,34,0,0

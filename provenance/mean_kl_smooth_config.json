@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "project_root": ".",
+  "gpu": 0,
+  "model": "models/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "teacher": "Frozen same base model, reference solution visible, LoRA disabled",
+  "ks": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "arms": [
+    "baseline",
+    "mean_kl",
+    "smooth"
+  ],
+  "training": {
+    "seed": 42,
+    "data_seed": 42,
+    "micro_batch": 1,
+    "gradient_accumulation": 32,
+    "learning_rate": 5e-06,
+    "planned_epochs": 30,
+    "max_completion_length": 1024,
+    "max_prompt_length": 20000,
+    "temperature": 1.1,
+    "top_p": 0.95,
+    "top_k": 20,
+    "max_grad_norm": 0.1,
+    "lora_rank": 64,
+    "lora_alpha": 128,
+    "student_thinking": false,
+    "teacher_thinking": true,
+    "pytorch_allocator_limit_gib": 20,
+    "loss": "FP32 all-position full-vocabulary forward KL; vocabulary-term upper clip .05",
+    "beta": 0,
+    "token_clip": 0.05,
+    "train_on": "Unmodified student on-policy trajectories; isolated A/B/C auxiliary objectives",
+    "checkpoint_retention": "Keep all checkpoints; no automatic deletion"
+  },
+  "gap": {
+    "divergence": "Unclipped full-vocabulary forward KL at temperature 1.1",
+    "chunk_tokens": 16,
+    "horizon": 64,
+    "candidate_max_k": 10,
+    "index": "Zero-based RESPONSE TOKEN index: peak C=2; max starts C=2; pre starts B=1",
+    "candidates": "Response index >=1; all 10 target tokens and preceding token must be non-special",
+    "max_pre_common_window": "peak_response_index + K, H<=64, paired common valid length",
+    "random_window": "random_start + K, paired with original branch",
+    "short_trajectory": "Keep original trace, record fallback; do not drop the training example",
+    "teacher_eos": "Honor EOS, record actual K; no fabricated padding or continuation after EOS",
+    "selection_rng": "Private deterministic RNG, does not consume student rollout RNG"
+  },
+  "validation": {
+    "dataset": "aime25",
+    "questions": 30,
+    "n": 2,
+    "metric": "Completed correct generations / 60; capped pilot, not comparable to 38k Avg@12",
+    "every_optimizer_updates": null,
+    "temperature": 1.0,
+    "max_new_tokens": 8192,
+    "thinking": true,
+    "independent_student": true,
+    "automatic_early_stopping": false,
+    "gpu_memory_gib": 24,
+    "max_num_seqs": 12
+  },
+  "schedule": "Bounded pilot: common start evaluation, five updates per arm, endpoint evaluation; no periodic evaluation",
+  "stop": "User stops manually using STOP file or SIGINT; finish current optimizer update and save",
+  "datasets": {
+    "training_source": "data/formal_train",
+    "training_repository": "siyanzhao/Openthoughts_math_30k_opsd",
+    "training_revision": "1f33e9dc2e8a1c639ca74f8024ad4a9f1f5eae62",
+    "validation_source": "data/full_eval/aime25",
+    "validation_revision": "6f71d77b0b89b9dabe07ab466c51df33f514df7f",
+    "overlap_policy": "Remove normalized exact AIME25 question matches; preserve order; no outcome/length filtering",
+    "test_dataset": null
+  },
+  "token_diagnostics": {
+    "enabled": true,
+    "all_training_trajectories": true,
+    "metrics": [
+      "entropy_student",
+      "entropy_teacher",
+      "kl_teacher_student",
+      "kl_student_teacher"
+    ],
+    "temperature": 1.1,
+    "full_vocabulary": true,
+    "unclipped": true,
+    "join_keys": [
+      "session_id",
+      "rank",
+      "sequence_index"
+    ],
+    "training_files": "training/opsd/metrics/{generation_trace,token_metrics}.rankN.jsonl"
+  },
+  "pilot": {
+    "origin": "runs/opsd_token_diagnostics_20261110",
+    "origin_checkpoint": "runs/opsd_token_diagnostics_20261110/training/opsd/checkpoint-35",
+    "checkpoint": "runs/opsd_smoothness_pilot_20261113/initial/checkpoint-35",
+    "start_step": 35,
+    "target_step": 40,
+    "updates_per_arm": 5,
+    "expected_trajectories_per_arm": 160,
+    "auxiliary": {
+      "auxiliary_weight": 0.05,
+      "smooth_alpha": 0.25,
+      "smooth_beta": 0.1
+    },
+    "objective": "(sum unclipped content KL + alpha * sum SmoothL1(adjacent KL differences)) / content_token_count; trajectory mean",
+    "arms": {
+      "baseline": "Exact frozen original loss",
+      "mean_kl": "Original + lambda * content mean KL",
+      "smooth": "Original + lambda * (content mean KL + alpha * SmoothL1 sum / content count)"
+    },
+    "auxiliary_exclusions": "First response token, pad and EOS ids; no crossing masked holes or trajectory boundaries",
+    "grading_used_for_loss": false,
+    "full_optimizer_scheduler_rng_resume": true,
+    "periodic_validation": false,
+    "source_collection_continues_independently": false,
+    "resource_policy": "At most one GPU occupied by this user; pause original collection at a saved optimizer boundary; serialize all pilot jobs on GPU 0",
+    "interpretation": "Single-seed short pilot; accuracy and curve changes are preliminary, not significance claims"
+  }
+}

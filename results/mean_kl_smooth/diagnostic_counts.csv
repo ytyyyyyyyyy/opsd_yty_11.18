@@ -1,0 +1,7 @@
+arm,stage,correct,incorrect,truncated,ungraded
+baseline,training,32,1,118,9
+baseline,endpoint,84,39,0,5
+mean_kl,training,34,1,113,12
+mean_kl,endpoint,82,44,0,2
+smooth,training,34,3,113,10
+smooth,endpoint,79,46,0,3

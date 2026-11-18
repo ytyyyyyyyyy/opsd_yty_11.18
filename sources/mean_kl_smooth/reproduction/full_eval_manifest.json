@@ -1,0 +1,12 @@
+{
+  "aime25": {
+    "repository": "yentinglin/aime_2025",
+    "revision": "6f71d77b0b89b9dabe07ab466c51df33f514df7f",
+    "rows": 30,
+    "source_sha256": {
+      "data/train-00000-of-00001-243207c6c994e1bd.parquet": "b74b507c1a4de7c9fafd2c83dfe2ef7b80579bcf0e0a754a1765db0f21c205fc"
+    },
+    "path": "data/full_eval/aime25",
+    "split": "train"
+  }
+}
