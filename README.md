@@ -34,6 +34,6 @@ All three arms resume from the same original OPSD step-35 checkpoint. Each arm r
 | [provenance](provenance) | Actual configurations, source hashes, checkpoint-35 hashes, data selection and environment versions |
 | [environment](environment) | Environment reference and archived package lists |
 
-See [REPRODUCE.md](REPRODUCE.md) for scripts, input layout, and the distinction between CPU checks and a full GPU run. The publication bundle includes aggregate results and plots. To reproduce the exact continuation, supply the full original checkpoint-35, including optimizer, scheduler, RNG and trainer state. Model weights, training data, checkpoints and raw generations are external inputs.
+See [REPRODUCE.md](REPRODUCE.md) for environment setup and evaluation on a new server. The maximum-gap experiment includes the staged AIME24, AIME25 and HMMT25 inputs. Its 13 full checkpoints are distributed through the [checkpoint release](https://github.com/ytyyyyyyyyy/opsd_yty_11.18/releases/tag/max-gap-k5-checkpoints-v1). For the smoothness experiment, supply the original OPSD checkpoint-35 separately. The Qwen3 base model, training corpus and raw generations are external inputs.
 
 The underlying OPSD implementation comes from [siyan-zhao/OPSD](https://github.com/siyan-zhao/OPSD), upstream commit `ae7d251`. File headers are retained.
