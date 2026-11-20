@@ -4,5 +4,8 @@ __pycache__/
 .env-vllm/
 cache/
 data/
+!/sources/max_gap_k5/data/
+/sources/max_gap_k5/data/*
+!/sources/max_gap_k5/data/full_eval/
 models/
 runs/
